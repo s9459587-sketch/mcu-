@@ -1,96 +1,29 @@
-#include "Gpio.h"
+
+#include "STD_TYPES.h"
 #include "SSD.h"
-#include "BitMath.h"
 
-u8 seg[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
-
+u8 seg[10]= 
+{
+    0x3F, // 0
+    0x06, // 1
+    0x5B, // 2
+    0x4F, // 3
+    0x66, // 4
+    0x6D, // 5
+    0x7D, // 6
+    0x07, // 7
+    0x7F, // 8
+    0x6F  // 9
+};
 void init(void)
 {
-    for (int i = 0; i < 7; i++)
-        SetPinDDR(portC,i,output);
-
-    SetPinDDR(portD,pin0,output);
-    SetPinDDR(portD,pin1,output);
+   DDRC=0xFF;
+   //بخليه output عشان اقدر اطلع عليه كهربا واتحكم فيه
 }
-
-//============
-
-void display(u8 number)
+void display(u8 num)
 {
-    if(number > 9)
-        return;
+ if(num>9) return;
 
-    u8 pat = seg[number];
-
-    for (u8 i = 0; i < 7; i++)
-    {
-        if(GET_BIT(pat,i))
-            SetPinValue(portD, i, HIGH);
-        else
-            SetPinValue(portD, i, LOW);
-    }
+ PORTC=seg[num];
+ // بقوله ابعت البنات ال وصلناها كلها مره واحده ع البورت دا
 }
-
-//============
-
-void select(u8 digit)
-{
-    if(digit == 0)
-    {
-        SetPinValue(portD,pin0,HIGH);
-        SetPinValue(portD,pin1,LOW);
-    }
-    else
-    {
-        SetPinValue(portD,pin0,LOW);
-        SetPinValue(portD,pin1,HIGH);
-    }
-}
-/*
-#include "Gpio.h"
-#include "SSD.h"
-#include "BitMath.h"
-u8 seg[10]={0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
-void init(void)
-{
-    for (int i = 0; i < 7; i++)
-     SetPinDDR(portC,i,output);
-
-SetPinDDR(portD,pin0,output);
-SetPinDDR(portD,pin1,output);
-}
-
-
-//============
-
-void diplay(u8 number)
-{
-if(number>9)
- return;
- u8 pat=seg[number];
- for (u8 i = 0; i < 7; i++)
- {
-    if(GET_BIT(pat,i))
-    SetPinValue(portD,HIGH,i);
-    
-    else
-    SetPinValue(portD,LOW,i);
- }
- 
-}
-
-//============
-
-void select(u8 digit)
-{
-if(digit==0)
-{
-SetPinValue(portD,pin0,HIGH);
-SetPinValue(portD,pin1,LOW);
-}
-else
-{
-SetPinValue(portD,pin0,LOW);
-SetPinValue(portD,pin1,HIGH);
-}
-} */
