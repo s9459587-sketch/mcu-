@@ -1,20 +1,13 @@
 #ifndef SSD_h
 #define SSD_h
 
-#include "Gpio.h"
+//reg portc
+#define PORTC *((volatile u8*)0x28)
+#define DDRC *((volatile u8*)0x27)
 
 void init(void);
-void display(u8 number);
-void select(u8 digit);
+void display(u8 num);
 
 #endif
-/*
-#ifndef SSD_h
-#define SSD_h
-#include "Gpio.h"
 
-void init(void);
-void diplay(u8 number);
-void select(u8 digit);
 
-#endif */
